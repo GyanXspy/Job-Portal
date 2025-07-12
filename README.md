@@ -174,14 +174,10 @@ SPRING_MAIL_PASSWORD=your-app-password
 5. Submit a pull request
 
 ## License
-
-This project is licensed under the MIT License.
+NO Licence 
 
 ## Support
 
-For support or questions, please contact:
-- Email: info@candlesty.com
-- Website: https://candlesty.com
 
 ---
 
