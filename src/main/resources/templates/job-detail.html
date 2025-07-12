@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${job.title + ' - Candlesty'}">Job Detail - Candlesty</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">Candlesty</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                    <a href="/jobs" class="text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Jobs</a>
+                    <a href="/apply" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Apply</a>
+                    <a href="/about" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                    <a href="/contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                </div>
+                
+                <div class="md:hidden flex items-center">
+                    <button class="mobile-menu-button text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-menu hidden md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">Home</a>
+                <a href="/jobs" class="block px-3 py-2 text-blue-600 rounded-md text-base font-medium">Jobs</a>
+                <a href="/apply" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">Apply</a>
+                <a href="/about" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">About</a>
+                <a href="/contact" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Job Detail Content -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Breadcrumb -->
+        <nav class="mb-8">
+            <ol class="flex items-center space-x-2 text-sm text-gray-600">
+                <li><a href="/" class="hover:text-blue-600">Home</a></li>
+                <li><i class="fas fa-chevron-right text-xs"></i></li>
+                <li><a href="/jobs" class="hover:text-blue-600">Jobs</a></li>
+                <li><i class="fas fa-chevron-right text-xs"></i></li>
+                <li class="text-gray-900" th:text="${job.title}">Job Title</li>
+            </ol>
+        </nav>
+
+        <!-- Job Header -->
+        <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+            <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
+                <div class="flex-1">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2" th:text="${job.title}">Job Title</h1>
+                    <p class="text-lg text-gray-600 mb-4" th:text="${job.department}">Department</p>
+                </div>
+                <div class="lg:ml-8 mt-4 lg:mt-0">
+                    <a href="/apply" class="block w-full lg:w-auto bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-center">
+                        <i class="fas fa-paper-plane mr-2"></i>Apply Now
+                    </a>
+                </div>
+            </div>
+
+            <!-- Job Meta Information -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="flex items-center">
+                    <i class="fas fa-map-marker-alt text-blue-600 mr-3"></i>
+                    <div>
+                        <p class="text-sm text-gray-500">Location</p>
+                        <p class="font-medium" th:text="${job.location}">Location</p>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-clock text-blue-600 mr-3"></i>
+                    <div>
+                        <p class="text-sm text-gray-500">Employment Type</p>
+                        <p class="font-medium" th:text="${job.employmentType}">Type</p>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-user text-blue-600 mr-3"></i>
+                    <div>
+                        <p class="text-sm text-gray-500">Experience Level</p>
+                        <p class="font-medium" th:text="${job.experienceLevel}">Level</p>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-dollar-sign text-blue-600 mr-3"></i>
+                    <div>
+                        <p class="text-sm text-gray-500">Salary Range</p>
+                        <p class="font-medium" th:text="${job.salaryRange}">Salary</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Description -->
+            <div class="mb-8">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Job Description</h2>
+                <div class="prose max-w-none">
+                    <p class="text-gray-700 leading-relaxed" th:utext="${#strings.replace(job.description, '\n', '<br>')}">
+                        Job description goes here...
+                    </p>
+                </div>
+            </div>
+
+            <!-- Requirements -->
+            <div th:if="${job.requirements != null and !job.requirements.isEmpty()}" class="mb-8">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Requirements</h2>
+                <div class="prose max-w-none">
+                    <div class="text-gray-700 leading-relaxed" th:utext="${#strings.replace(job.requirements, '\n', '<br>')}">
+                        Requirements go here...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Responsibilities -->
+            <div th:if="${job.responsibilities != null and !job.responsibilities.isEmpty()}" class="mb-8">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Responsibilities</h2>
+                <div class="prose max-w-none">
+                    <div class="text-gray-700 leading-relaxed" th:utext="${#strings.replace(job.responsibilities, '\n', '<br>')}">
+                        Responsibilities go here...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benefits -->
+            <div th:if="${job.benefits != null and !job.benefits.isEmpty()}" class="mb-8">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Benefits & Perks</h2>
+                <div class="prose max-w-none">
+                    <div class="text-gray-700 leading-relaxed" th:utext="${#strings.replace(job.benefits, '\n', '<br>')}">
+                        Benefits go here...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Information -->
+            <div th:if="${job.additionalInfo != null and !job.additionalInfo.isEmpty()}" class="mb-8">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Additional Information</h2>
+                <div class="prose max-w-none">
+                    <div class="text-gray-700 leading-relaxed" th:utext="${#strings.replace(job.additionalInfo, '\n', '<br>')}">
+                        Additional information goes here...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Application Deadline -->
+            <div th:if="${job.applicationDeadline != null}" class="mb-8">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Application Deadline</h2>
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-calendar-alt text-yellow-600 mr-3"></i>
+                        <div>
+                            <p class="font-medium text-yellow-800">
+                                <span th:text="${#temporals.format(job.applicationDeadline, 'EEEE, MMMM dd, yyyy')}">Deadline</span>
+                            </p>
+                            <p class="text-sm text-yellow-700">
+                                <span th:text="${#temporals.format(job.applicationDeadline, 'HH:mm')}">Time</span> (Local Time)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Apply Button -->
+            <div class="border-t border-gray-200 pt-8">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="/apply" class="flex-1 bg-blue-600 text-white text-center py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-paper-plane mr-2"></i>Apply for this Position
+                    </a>
+                    <a href="/jobs" class="flex-1 bg-gray-100 text-gray-700 text-center py-4 rounded-lg font-semibold hover:bg-gray-200 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to All Jobs
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Jobs Section -->
+        <div class="bg-white rounded-lg shadow-md p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Other Opportunities</h2>
+            <p class="text-gray-600 mb-6">
+                Don't see the perfect fit? Explore other opportunities at Candlesty.
+            </p>
+            <a href="/jobs" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold">
+                <span>View All Open Positions</span>
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold">Candlesty</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Revolutionizing trading with AI-powered solutions for the modern financial world.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="/about" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="/jobs" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="/contact" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Services</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">AI Trading</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Algorithm Development</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Quantitative Analysis</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Connect</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">
+                    © 2024 Candlesty. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-button').addEventListener('click', function() {
+            document.querySelector('.mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html> 

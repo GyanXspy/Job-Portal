@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Email Functionality - Candlesty</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 p-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-2xl font-bold mb-6">Test Email Functionality</h1>
+        
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-lg font-semibold mb-4">Test Status Update Email</h2>
+            
+            <form id="testForm" class="space-y-4">
+                <div>
+                    <label for="applicationId" class="block text-sm font-medium text-gray-700">Application ID:</label>
+                    <input type="number" id="applicationId" name="applicationId" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div>
+                    <label for="testStatus" class="block text-sm font-medium text-gray-700">Status:</label>
+                    <select id="testStatus" name="testStatus" required
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="PENDING">Pending</option>
+                        <option value="REVIEWED">Reviewed</option>
+                        <option value="ACCEPTED">Accepted</option>
+                        <option value="REJECTED">Rejected</option>
+                    </select>
+                </div>
+                
+                <button type="submit" 
+                        class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+                    Test Email
+                </button>
+            </form>
+            
+            <div id="result" class="mt-4 p-4 rounded-md hidden"></div>
+        </div>
+        
+        <div class="mt-6">
+            <a href="/admin/applications" class="text-blue-600 hover:text-blue-800">
+                ← Back to Applications
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const applicationId = document.getElementById('applicationId').value;
+            const status = document.getElementById('testStatus').value;
+            const resultDiv = document.getElementById('result');
+            
+            console.log('Testing email - ID:', applicationId, 'Status:', status);
+            
+            const formData = new FormData();
+            formData.append('status', status);
+            
+            fetch(`/admin/test-email/${applicationId}`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.text();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                resultDiv.innerHTML = `<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">${data}</div>`;
+                resultDiv.classList.remove('hidden');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">Error: ${error.message}</div>`;
+                resultDiv.classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+</html> 

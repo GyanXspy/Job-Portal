@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Position - Candlesty</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">Candlesty</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                    <a href="/jobs" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Jobs</a>
+                    <a href="/apply" class="text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Apply</a>
+                    <a href="/about" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                    <a href="/contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                </div>
+                
+                <div class="md:hidden flex items-center">
+                    <button class="mobile-menu-button text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-menu hidden md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">Home</a>
+                <a href="/jobs" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">Jobs</a>
+                <a href="/apply" class="block px-3 py-2 text-blue-600 rounded-md text-base font-medium">Apply</a>
+                <a href="/about" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">About</a>
+                <a href="/contact" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="bg-gradient-to-r from-blue-600 to-purple-700 text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-bold mb-4">Apply for Position</h1>
+            <p class="text-xl text-gray-200">
+                Join our team and help us revolutionize automated trading with AI technology.
+            </p>
+        </div>
+    </section>
+
+    <!-- Application Form -->
+    <section class="py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Flash Messages -->
+            <div th:if="${success}" class="flash-message bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6 transition-opacity duration-300">
+                <i class="fas fa-check-circle mr-2"></i>
+                <span th:text="${success}"></span>
+            </div>
+            
+            <div th:if="${error}" class="flash-message bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6 transition-opacity duration-300">
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                <span th:text="${error}"></span>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <form th:action="@{/apply}" method="post" enctype="multipart/form-data" class="space-y-6">
+                    
+                    <!-- Personal Information -->
+                    <div class="border-b border-gray-200 pb-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                            <i class="fas fa-user mr-2 text-blue-600"></i>
+                            Personal Information
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Full Name <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="name" name="name" required
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                       placeholder="Enter your full name">
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Email Address <span class="text-red-500">*</span>
+                                </label>
+                                <input type="email" id="email" name="email" required
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                       placeholder="Enter your email address">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Position and Experience -->
+                    <div class="border-b border-gray-200 pb-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                            <i class="fas fa-briefcase mr-2 text-blue-600"></i>
+                            Position & Experience
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="appliedPosition" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Position Applied For <span class="text-red-500">*</span>
+                                </label>
+                                <select id="appliedPosition" name="appliedPosition" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">Select a position</option>
+                                    <option th:each="position : ${availablePositions}" 
+                                            th:value="${position}" 
+                                            th:text="${position}">Position</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="experienceLevel" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Experience Level <span class="text-red-500">*</span>
+                                </label>
+                                <select id="experienceLevel" name="experienceLevel" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">Select experience level</option>
+                                    <option value="Entry Level (0-2 years)">Entry Level (0-2 years)</option>
+                                    <option value="Mid Level (3-5 years)">Mid Level (3-5 years)</option>
+                                    <option value="Senior Level (6-10 years)">Senior Level (6-10 years)</option>
+                                    <option value="Expert Level (10+ years)">Expert Level (10+ years)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education -->
+                    <div class="border-b border-gray-200 pb-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                            <i class="fas fa-graduation-cap mr-2 text-blue-600"></i>
+                            Education
+                        </h3>
+                        
+                        <div>
+                            <label for="education" class="block text-sm font-medium text-gray-700 mb-2">
+                                Education Background <span class="text-red-500">*</span>
+                            </label>
+                            <textarea id="education" name="education" rows="3" required
+                                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                      placeholder="Please describe your educational background, including degrees, institutions, and relevant coursework"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Resume Upload -->
+                    <div class="border-b border-gray-200 pb-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                            <i class="fas fa-file-upload mr-2 text-blue-600"></i>
+                            Resume Upload
+                        </h3>
+                        
+                        <div>
+                            <label for="resume" class="block text-sm font-medium text-gray-700 mb-2">
+                                Resume/CV <span class="text-red-500">*</span>
+                            </label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                                <input type="file" id="resume" name="resume" required accept=".pdf,.doc,.docx"
+                                       class="hidden" onchange="updateFileName(this)">
+                                <label for="resume" class="cursor-pointer">
+                                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                                    <p class="text-lg font-medium text-gray-700 mb-2">Click to upload your resume</p>
+                                    <p class="text-sm text-gray-500">PDF, DOC, or DOCX files only (max 10MB)</p>
+                                </label>
+                                <p id="fileName" class="text-sm text-blue-600 mt-2 hidden"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Information -->
+                    <div class="pb-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                            <i class="fas fa-info-circle mr-2 text-blue-600"></i>
+                            Additional Information
+                        </h3>
+                        
+                        <div>
+                            <label for="additionalNotes" class="block text-sm font-medium text-gray-700 mb-2">
+                                Additional Notes (Optional)
+                            </label>
+                            <textarea id="additionalNotes" name="additionalNotes" rows="4"
+                                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                      placeholder="Tell us about your relevant experience, skills, or why you're interested in joining our team"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-end">
+                        <button type="submit" 
+                                class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Submit Application
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold">Candlesty</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Revolutionizing trading with AI-powered solutions for the modern financial world.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="/about" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="/jobs" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="/contact" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Services</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">AI Trading</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Algorithm Development</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Quantitative Analysis</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Connect</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">
+                    © 2024 Candlesty. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-button').addEventListener('click', function() {
+            document.querySelector('.mobile-menu').classList.toggle('hidden');
+        });
+        
+        // File upload handling
+        function updateFileName(input) {
+            const fileName = input.files[0]?.name;
+            const fileNameElement = document.getElementById('fileName');
+            if (fileName) {
+                fileNameElement.textContent = `Selected file: ${fileName}`;
+                fileNameElement.classList.remove('hidden');
+            } else {
+                fileNameElement.classList.add('hidden');
+            }
+        }
+        
+        // Form validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('border-red-500');
+                } else {
+                    field.classList.remove('border-red-500');
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+                alert('Please fill in all required fields.');
+            }
+        });
+    </script>
+</body>
+</html> 

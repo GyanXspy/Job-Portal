@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candlesty - AI-Powered Trading Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">Candlesty</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="/jobs" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Jobs</a>
+                    <a href="/apply" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Apply</a>
+                    <a href="/about" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                    <a href="/contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                </div>
+                
+                <div class="md:hidden flex items-center">
+                    <button class="mobile-menu-button text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-menu hidden md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 text-blue-600 rounded-md text-base font-medium">Home</a>
+                <a href="/jobs" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">Jobs</a>
+                <a href="/apply" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">Apply</a>
+                <a href="/about" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">About</a>
+                <a href="/contact" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-5xl font-bold mb-6">
+                        Revolutionizing Trading with 
+                        <span class="text-yellow-300">AI Power</span>
+                    </h1>
+                    <p class="text-xl mb-8 text-gray-200">
+                        Join our team of innovators building the future of automated trading. 
+                        We're looking for talented individuals to help us create cutting-edge 
+                        AI solutions that transform the financial markets.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="/jobs" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center">
+                            <i class="fas fa-briefcase mr-2"></i>
+                            View Open Positions
+                        </a>
+                        <a href="/apply" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors text-center">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Apply Now
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden lg:block">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-600 rounded-2xl transform rotate-3"></div>
+                        <div class="relative bg-white rounded-2xl p-8 shadow-2xl">
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                </div>
+                                <span class="text-sm text-gray-500">AI Trading Dashboard</span>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">BTC/USD</span>
+                                    <span class="text-green-600 font-semibold">+2.45%</span>
+                                </div>
+                                <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-green-400 to-blue-500 rounded-full" style="width: 75%"></div>
+                                </div>
+                                <div class="flex justify-between text-sm text-gray-500">
+                                    <span>AI Confidence: 87%</span>
+                                    <span>Profit: +$2,340</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Join Candlesty?</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    We're building the future of automated trading with cutting-edge AI technology. 
+                    Join our mission to revolutionize the financial markets.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6 rounded-lg hover-scale">
+                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-brain text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">AI Innovation</h3>
+                    <p class="text-gray-600">
+                        Work with state-of-the-art machine learning algorithms and neural networks 
+                        to develop intelligent trading systems.
+                    </p>
+                </div>
+                
+                <div class="text-center p-6 rounded-lg hover-scale">
+                    <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Financial Impact</h3>
+                    <p class="text-gray-600">
+                        Your work directly impacts global financial markets, creating real value 
+                        for traders and investors worldwide.
+                    </p>
+                </div>
+                
+                <div class="text-center p-6 rounded-lg hover-scale">
+                    <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-users text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Team Excellence</h3>
+                    <p class="text-gray-600">
+                        Join a team of world-class engineers, data scientists, and financial experts 
+                        passionate about innovation and excellence.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Open Positions Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Open Positions</h2>
+                <p class="text-xl text-gray-600">
+                    We're hiring talented individuals to join our AI trading revolution
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div th:each="job : ${jobs}" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-900" th:text="${job.title}">Job Title</h3>
+                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded" th:text="${job.employmentType}">Open</span>
+                    </div>
+                    <p class="text-gray-600 mb-4" th:text="${job.description}">
+                        Join our team to develop cutting-edge AI trading algorithms and revolutionize the financial markets.
+                    </p>
+                    <div class="space-y-2 mb-4">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span th:text="${job.location}">Location</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-user mr-2"></i>
+                            <span th:text="${job.experienceLevel}">Experience Level</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">
+                            <i class="fas fa-dollar-sign mr-1"></i>
+                            <span th:text="${job.salaryRange}">Salary Range</span>
+                        </span>
+                        <a href="/apply" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                            Apply Now <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="/jobs" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                    View All Positions
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-purple-700 text-white">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold mb-6">Ready to Join the Future?</h2>
+            <p class="text-xl mb-8 text-gray-200">
+                Be part of the team that's revolutionizing automated trading with AI. 
+                Apply now and help us build the future of finance.
+            </p>
+            <a href="/apply" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors inline-flex items-center">
+                <i class="fas fa-rocket mr-2"></i>
+                Start Your Application
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold">Candlesty</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Revolutionizing trading with AI-powered solutions for the modern financial world.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="/about" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="/jobs" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="/contact" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Services</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">AI Trading</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Algorithm Development</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Quantitative Analysis</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Connect</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">
+                    © 2024 Candlesty. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-button').addEventListener('click', function() {
+            document.querySelector('.mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html> 

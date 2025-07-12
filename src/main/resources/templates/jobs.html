@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Positions - Candlesty</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">Candlesty</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                    <a href="/jobs" class="text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Jobs</a>
+                    <a href="/apply" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Apply</a>
+                    <a href="/about" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                    <a href="/contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                </div>
+                
+                <div class="md:hidden flex items-center">
+                    <button class="mobile-menu-button text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mobile-menu hidden md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">Home</a>
+                <a href="/jobs" class="block px-3 py-2 text-blue-600 rounded-md text-base font-medium">Jobs</a>
+                <a href="/apply" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">Apply</a>
+                <a href="/about" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">About</a>
+                <a href="/contact" class="block px-3 py-2 text-gray-700 hover:text-blue-600 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="bg-gradient-to-r from-blue-600 to-purple-700 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-bold mb-4">Open Positions</h1>
+            <p class="text-xl text-gray-200 max-w-3xl mx-auto">
+                Join our team of innovators and help us revolutionize automated trading with cutting-edge AI technology.
+            </p>
+        </div>
+    </section>
+
+    <!-- Search and Filter Section -->
+    <section class="py-8 bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <form method="get" action="/jobs" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <div>
+                        <input type="text" name="search" th:value="${search}" 
+                               placeholder="Search jobs..." 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <select name="department" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">All Departments</option>
+                            <option th:each="dept : ${departments}" th:value="${dept}" th:text="${dept}" 
+                                    th:selected="${dept == selectedDepartment}">Department</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select name="location" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">All Locations</option>
+                            <option th:each="loc : ${locations}" th:value="${loc}" th:text="${loc}" 
+                                    th:selected="${loc == selectedLocation}">Location</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select name="employmentType" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">All Types</option>
+                            <option th:each="type : ${employmentTypes}" th:value="${type}" th:text="${type}" 
+                                    th:selected="${type == selectedEmploymentType}">Type</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select name="experienceLevel" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">All Levels</option>
+                            <option th:each="level : ${experienceLevels}" th:value="${level}" th:text="${level}" 
+                                    th:selected="${level == selectedExperienceLevel}">Level</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-search mr-2"></i>Search Jobs
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Jobs Grid -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div th:if="${jobs.empty}" class="text-center py-12">
+                <i class="fas fa-search text-6xl text-gray-300 mb-4"></i>
+                <h3 class="text-2xl font-semibold text-gray-900 mb-2">No jobs found</h3>
+                <p class="text-gray-600">Try adjusting your search criteria or check back later for new opportunities.</p>
+            </div>
+            
+            <div th:if="${!jobs.empty}" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div th:each="job : ${jobs}" class="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-gray-900" th:text="${job.title}">Job Title</h3>
+                        <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full" 
+                              th:text="${job.employmentType}">Full-time</span>
+                    </div>
+                    <p class="text-gray-600 mb-6" th:text="${job.description}">
+                        Job description goes here...
+                    </p>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-map-marker-alt mr-2 text-blue-600"></i>
+                            <span th:text="${job.location}">Location</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-clock mr-2 text-blue-600"></i>
+                            <span th:text="${job.employmentType}">Employment Type</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-dollar-sign mr-2 text-blue-600"></i>
+                            <span th:text="${job.salaryRange}">Salary Range</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-user mr-2 text-blue-600"></i>
+                            <span th:text="${job.experienceLevel}">Experience Level</span>
+                        </div>
+                    </div>
+                    <div th:if="${job.requirements != null and !job.requirements.isEmpty()}" class="mb-6">
+                        <h4 class="font-semibold text-gray-900 mb-2">Requirements:</h4>
+                        <div class="text-sm text-gray-600" th:utext="${#strings.replace(job.requirements, '\n', '<br>')}">
+                            Requirements text...
+                        </div>
+                    </div>
+                    <div class="flex space-x-3">
+                        <a th:href="@{/job/{id}(id=${job.id})}" 
+                           class="flex-1 bg-gray-100 text-gray-700 text-center py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors">
+                            <i class="fas fa-eye mr-2"></i>View Details
+                        </a>
+                        <a href="/apply" 
+                           class="flex-1 bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-paper-plane mr-2"></i>Apply Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gray-100">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Don't See Your Perfect Role?</h2>
+            <p class="text-lg text-gray-600 mb-8">
+                We're always looking for talented individuals to join our team. 
+                Send us your resume and let's discuss how you can contribute to our mission.
+            </p>
+            <a href="/apply" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors inline-flex items-center">
+                <i class="fas fa-paper-plane mr-2"></i>
+                Submit General Application
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold">Candlesty</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Revolutionizing trading with AI-powered solutions for the modern financial world.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="/about" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="/jobs" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="/contact" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Services</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">AI Trading</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Algorithm Development</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Quantitative Analysis</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Connect</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">
+                    © 2024 Candlesty. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-button').addEventListener('click', function() {
+            document.querySelector('.mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html> 

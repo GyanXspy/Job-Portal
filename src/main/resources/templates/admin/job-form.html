@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Job Form | Candlesty</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/admin" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">Candlesty Admin</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/admin" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Dashboard</a>
+                    <a href="/admin/applications" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Applications</a>
+                    <a href="/admin/jobs" class="text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Jobs</a>
+                    <form th:action="@{/logout}" method="post" class="inline">
+                        <button type="submit" class="text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                            <i class="fas fa-sign-out-alt mr-1"></i>Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900" th:text="${job.id == null ? 'Create New Job' : 'Edit Job'}">Job Form</h1>
+            <p class="text-gray-600 mt-2">Fill in the details below to create a new job posting</p>
+        </div>
+
+        <!-- Job Form -->
+        <div class="bg-white rounded-lg shadow-md p-8">
+            <form th:action="${job.id == null ? '/admin/jobs/create' : '/admin/jobs/' + job.id + '/edit'}" 
+                  th:object="${job}" method="post" class="space-y-6">
+                
+                <!-- Basic Information -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Job Title *</label>
+                        <input type="text" id="title" th:field="*{title}" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                               required>
+                    </div>
+                    
+                    <div>
+                        <label for="department" class="block text-sm font-medium text-gray-700 mb-2">Department *</label>
+                        <select id="department" th:field="*{department}" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                required>
+                            <option value="">Select Department</option>
+                            <option th:each="dept : ${departments}" th:value="${dept}" th:text="${dept}">Department</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="location" class="block text-sm font-medium text-gray-700 mb-2">Location *</label>
+                        <input type="text" id="location" th:field="*{location}" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                               placeholder="e.g., Remote, New York, London" required>
+                    </div>
+                    
+                    <div>
+                        <label for="employmentType" class="block text-sm font-medium text-gray-700 mb-2">Employment Type *</label>
+                        <select id="employmentType" th:field="*{employmentType}" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                required>
+                            <option value="">Select Type</option>
+                            <option th:each="type : ${employmentTypes}" th:value="${type}" th:text="${type}">Type</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="experienceLevel" class="block text-sm font-medium text-gray-700 mb-2">Experience Level *</label>
+                        <select id="experienceLevel" th:field="*{experienceLevel}" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                required>
+                            <option value="">Select Level</option>
+                            <option th:each="level : ${experienceLevels}" th:value="${level}" th:text="${level}">Level</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="openings" class="block text-sm font-medium text-gray-700 mb-2">Number of Openings *</label>
+                        <input type="number" id="openings" th:field="*{openings}" min="1" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                               required>
+                    </div>
+                    
+                    <div>
+                        <label for="salaryRange" class="block text-sm font-medium text-gray-700 mb-2">Salary Range *</label>
+                        <input type="text" id="salaryRange" th:field="*{salaryRange}" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                               placeholder="e.g., $80,000 - $120,000" required>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Job Description *</label>
+                    <textarea id="description" th:field="*{description}" rows="6" 
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                              placeholder="Provide a detailed description of the role, responsibilities, and what the candidate will be doing..." 
+                              required></textarea>
+                </div>
+
+                <!-- Requirements -->
+                <div>
+                    <label for="requirements" class="block text-sm font-medium text-gray-700 mb-2">Requirements</label>
+                    <textarea id="requirements" th:field="*{requirements}" rows="4" 
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                              placeholder="List the key requirements, skills, and qualifications needed for this position..."></textarea>
+                </div>
+
+                <!-- Responsibilities -->
+                <div>
+                    <label for="responsibilities" class="block text-sm font-medium text-gray-700 mb-2">Responsibilities</label>
+                    <textarea id="responsibilities" th:field="*{responsibilities}" rows="4" 
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                              placeholder="Outline the key responsibilities and duties for this role..."></textarea>
+                </div>
+
+                <!-- Benefits -->
+                <div>
+                    <label for="benefits" class="block text-sm font-medium text-gray-700 mb-2">Benefits & Perks</label>
+                    <textarea id="benefits" th:field="*{benefits}" rows="3" 
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                              placeholder="List the benefits, perks, and advantages of working in this role..."></textarea>
+                </div>
+
+                <!-- Additional Information -->
+                <div>
+                    <label for="additionalInfo" class="block text-sm font-medium text-gray-700 mb-2">Additional Information</label>
+                    <textarea id="additionalInfo" th:field="*{additionalInfo}" rows="3" 
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                              placeholder="Any additional information about the role, company culture, or application process..."></textarea>
+                </div>
+
+                <!-- Application Deadline -->
+                <div>
+                    <label for="applicationDeadline" class="block text-sm font-medium text-gray-700 mb-2">Application Deadline (Optional)</label>
+                    <input type="datetime-local" id="applicationDeadline" th:field="*{applicationDeadline}" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <p class="text-sm text-gray-500 mt-1">Leave empty if there's no specific deadline</p>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+                    <a href="/admin/jobs" 
+                       class="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
+                        Cancel
+                    </a>
+                    <button type="submit" 
+                            class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                        <span th:text="${job.id == null ? 'Create Job' : 'Update Job'}">Submit</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html> 

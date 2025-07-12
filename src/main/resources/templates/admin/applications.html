@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Applications Management - Candlesty</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">Candlesty Admin</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/admin" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Dashboard</a>
+                    <a href="/admin/applications" class="text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Applications</a>
+                    <a href="/admin/jobs" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Jobs</a>
+                    <form th:action="@{/logout}" method="post" class="inline">
+                        <button type="submit" class="text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                            <i class="fas fa-sign-out-alt mr-1"></i>Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="bg-gradient-to-r from-blue-600 to-purple-700 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold mb-2">Applications Management</h1>
+            <p class="text-gray-200">Manage and review job applications</p>
+        </div>
+    </section>
+
+    <!-- Applications Table -->
+    <section class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-semibold text-gray-900">All Applications</h2>
+                    <p class="text-sm text-gray-600 mt-1">Total: <span th:text="${#lists.size(applications)}">0</span> applications</p>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Applicant</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Experience</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Applied Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email Sent</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr th:each="app : ${applications}" class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900" th:text="${app.name}">Name</div>
+                                        <div class="text-sm text-gray-500" th:text="${app.email}">Email</div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900" th:text="${app.appliedPosition}">Position</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900" th:text="${app.experienceLevel}">Experience</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900" th:text="${#temporals.format(app.appliedAt, 'MMM dd, yyyy')}">Date</div>
+                                    <div class="text-sm text-gray-500" th:text="${#temporals.format(app.appliedAt, 'HH:mm')}">Time</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span th:class="${app.status == 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 
+                                                   app.status == 'REVIEWED' ? 'bg-blue-100 text-blue-800' : 
+                                                   app.status == 'ACCEPTED' ? 'bg-green-100 text-green-800' : 
+                                                   'bg-red-100 text-red-800'}" 
+                                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                                          th:text="${app.status}">Status</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span th:if="${app.emailSent}" class="text-green-600">
+                                        <i class="fas fa-check-circle"></i> Sent
+                                    </span>
+                                    <span th:unless="${app.emailSent}" class="text-red-600">
+                                        <i class="fas fa-times-circle"></i> Pending
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex space-x-2">
+                                        <button class="view-btn text-blue-600 hover:text-blue-900" th:attr="data-id=${app.id}">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="download-btn text-green-600 hover:text-green-900" th:attr="data-filename=${app.resumeStoredFileName}">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                        <button class="update-btn text-purple-600 hover:text-purple-900" th:attr="data-id=${app.id}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="delete-btn text-red-600 hover:text-red-900" th:attr="data-id=${app.id}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Details Modal -->
+    <div id="applicationModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-screen overflow-y-auto">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900">Application Details</h3>
+                        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="modalContent" class="px-6 py-4">
+                    <!-- Content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Update Modal -->
+    <div id="statusModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">Update Application Status</h3>
+                </div>
+                <div class="px-6 py-4">
+                    <form id="statusForm">
+                        <input type="hidden" id="applicationId" name="applicationId">
+                        <div class="mb-4">
+                            <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                            <select id="status" name="status" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="PENDING">Pending</option>
+                                <option value="REVIEWED">Reviewed</option>
+                                <option value="ACCEPTED">Accepted</option>
+                                <option value="REJECTED">Rejected</option>
+                            </select>
+                        </div>
+                        <div class="flex justify-end space-x-3">
+                            <button type="button" onclick="closeStatusModal()" 
+                                    class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                                Cancel
+                            </button>
+                            <button type="submit" 
+                                    class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                Update Status
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // View application details
+        function viewApplication(id) {
+            // In a real application, you would fetch the details via AJAX
+            // For now, we'll show a simple message
+            document.getElementById('modalContent').innerHTML = `
+                <div class="space-y-4">
+                    <p class="text-gray-600">Application ID: ${id}</p>
+                    <p class="text-gray-600">Detailed application information would be displayed here.</p>
+                    <p class="text-gray-600">This would include all the form data, resume download link, etc.</p>
+                </div>
+            `;
+            document.getElementById('applicationModal').classList.remove('hidden');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('applicationModal').classList.add('hidden');
+        }
+
+        // Update application status
+        function updateStatus(id) {
+            document.getElementById('applicationId').value = id;
+            document.getElementById('statusModal').classList.remove('hidden');
+        }
+
+        // Close status modal
+        function closeStatusModal() {
+            document.getElementById('statusModal').classList.add('hidden');
+        }
+
+        // Handle status form submission
+        document.getElementById('statusForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = document.getElementById('applicationId').value;
+            const status = document.getElementById('status').value;
+            
+            console.log('Updating status - ID:', id, 'Status:', status);
+            
+            // Create form data
+            const formData = new FormData();
+            formData.append('status', status);
+            
+            fetch(`/admin/application/${id}/status`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    return response.text().then(text => {
+                        throw new Error('Server error: ' + text);
+                    });
+                }
+            })
+            .then(data => {
+                console.log('Success response:', data);
+                alert('Status updated successfully');
+                closeStatusModal();
+                location.reload();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error updating status: ' + error.message);
+            });
+        });
+
+        // Delete application
+        function deleteApplication(id) {
+            if (confirm('Are you sure you want to delete this application?')) {
+                fetch(`/admin/application/${id}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert('Application deleted successfully');
+                    location.reload();
+                })
+                .catch(error => {
+                    alert('Error deleting application');
+                });
+            }
+        }
+
+        // Download resume
+        function downloadResume(filename) {
+            window.open(`/admin/resume/${filename}`, '_blank');
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const applicationModal = document.getElementById('applicationModal');
+            const statusModal = document.getElementById('statusModal');
+            
+            if (event.target === applicationModal) {
+                closeModal();
+            }
+            if (event.target === statusModal) {
+                closeStatusModal();
+            }
+        }
+
+        // Add event listeners for action buttons
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                viewApplication(this.getAttribute('data-id'));
+            });
+        });
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                downloadResume(this.getAttribute('data-filename'));
+            });
+        });
+        document.querySelectorAll('.update-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                updateStatus(this.getAttribute('data-id'));
+            });
+        });
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                deleteApplication(this.getAttribute('data-id'));
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,61 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+
+# Exclude target folders inside src/main or src/test from being ignored
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS (Spring Tool Suite) ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### 🔒 Ignore sensitive config and environment files ###
+# Ignore main application properties
+application.properties
+
+# Ignore environment-specific properties
+application-dev.properties
+application-test.properties
+application-local.properties
+
+# Ignore YAML environment files
+*.yml
+*.yaml
+
+# Ignore dotenv files
+.env
+.env.*
+
+# Ignore custom secrets and credentials
+credentials.json
+secret-config.yaml
+
+### 🧪 Ignore logs and temp files ###
+*.log
+*.tmp
+*.out
