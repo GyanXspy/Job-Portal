@@ -84,7 +84,7 @@ public class JobApplicationController {
     @PostMapping("/admin/application/{id}/status")
     @ResponseBody
     public ResponseEntity<String> updateApplicationStatus(@PathVariable Long id, 
-                                                       @RequestParam String status) {
+                                                            @RequestParam String status) {
         try {
             log.info("Updating application status - ID: {}, Status: {}", id, status);
             JobApplication updatedApplication = jobApplicationService.updateApplicationStatus(id, status);
