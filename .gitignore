@@ -36,7 +36,6 @@ build/
 
 ### 🔒 Ignore sensitive config and environment files ###
 # Ignore main application properties
-application.properties
 
 # Ignore environment-specific properties
 application-dev.properties
